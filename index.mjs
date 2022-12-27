@@ -1,22 +1,22 @@
 import moment from "moment";
+import { program } from "commander"
 
-console.dir(process.argv);
+program
+	.option('-k, --keys <keys>', 'Number of keys to generate', 10)
 
-let keys = 10;
+program.parse();
 
-if (process.argv.length === 3) {
-  keys = parseInt(process.argv[2]);
-}
+const options = program.opts();
 
 let now = moment();
 let filename = `keys-${now.toString()}.txt`;
-console.log(`Generating ${keys} keys to ${filename}...`);
+console.log(`Generating ${options.keys} keys to ${filename}...`);
 
 let fragment = (length) => {
   return Math.random().toString(36).substr(2, length);
 };
 
-for (let index = 0; index < keys; index++) {
+for (let index = 0; index < options.keys; index++) {
 	let key = `${fragment(5)}-${fragment(5)}-${fragment(5)}`.toUpperCase();	
 	console.log(key);
 }

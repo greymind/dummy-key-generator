@@ -9,6 +9,7 @@
   "author": "Balakrishnan (Balki) Ranganathan",
   "license": "MIT",
   "dependencies": {
+    "commander": "^9.4.1",
     "moment": "^2.29.4"
   }
 }
