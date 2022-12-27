@@ -1,9 +1,10 @@
 import { program } from "commander";
 import fs from "fs/promises";
+import { EOL } from "os";
 import moment from "moment";
 import { exit } from "process";
 
-program.option("-k, --keys <keys>", "Number of keys to generate", 10).option("-f, --format <format>", "Timestamp format string", "YYYYMMDD-HH");
+program.option("-k, --keys <keys>", "Number of keys to generate", 10).option("-f, --format <format>", "Timestamp format string", "YYYYMMDD-HHmmss");
 
 program.parse();
 
@@ -54,11 +55,14 @@ let getFragment = (length) => {
     .substring(2, 2 + length);
 };
 
+let keysToWrite = "";
+
 for (let index = 0; index < options.keys; index++) {
   let key = `${getFragment(5)}-${getFragment(5)}-${getFragment(5)}`.toUpperCase();
+  keysToWrite += key + EOL;
   console.log(key);
 }
 
-await fs.writeFile(filename, "test", { flag: "wx" });
+await fs.writeFile(filename, keysToWrite, { flag: "wx" });
 
 console.log(`Generation complete!`);
