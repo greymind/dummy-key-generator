@@ -4,14 +4,17 @@ import { EOL } from "os";
 import moment from "moment";
 import { exit } from "process";
 
-program.option("-k, --keys <keys>", "Number of keys to generate", 10).option("-f, --format <format>", "Timestamp format string", "YYYYMMDD-HHmmss");
+program
+  .option("-k, --keys <keys>", "Number of keys to generate", 10)
+  .option("-f, --format <format>", "Timestamp format string", "YYYYMMDD-HHmmss")
+  .option("-t, --tag <tag>", "Custom tag to append to filename", (value) => `${value}-`, "");
 
 program.parse();
 
 const options = program.opts();
 
 let now = moment();
-let baseFilename = `keys-${now.format(options.format)}`;
+let baseFilename = `keys-${options.tag}${now.format(options.format)}`;
 let extension = ".txt";
 
 let getAvailableFilename = async (baseFilename, extension) => {
