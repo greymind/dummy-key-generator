@@ -12,7 +12,7 @@ npm install
 
 ``` bash
 node ./index.mjs --help
-node ./index.mjs --keys 5
+node ./index.mjs --keys 20 --tag fifa-nl
 ```
 
 ## Todo
