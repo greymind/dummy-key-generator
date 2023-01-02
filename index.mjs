@@ -95,12 +95,15 @@ const runWebMode = async () => {
     const tag = req.query.tag ? `${req.query.tag}-` : options.tag;
     const download = req.query.download || options.download;
 
+    console.log(`New request: keys=${keys}, format=${format}, tag=${tag}, download=${download}`);
+
     if (download) {
       const readStream = new stream.PassThrough();
       const keysToWrite = getKeysToWrite(keys, EOL);
       readStream.end(keysToWrite);
 
-      res.set("Content-disposition", "attachment; filename=" + `keys-${tag}${now.format(format)}.txt`);
+      const filename = `keys-${tag}${now.format(format)}.txt`;
+      res.set("Content-disposition", `attachment; filename=${filename}`);
       res.set("Content-Type", "text/plain");
 
       readStream.pipe(res);
@@ -111,7 +114,7 @@ const runWebMode = async () => {
   });
 
   app.get("/help", async (req, res) => {
-    res.send("?keys=<keys>&format=<format>&tag=<tag>&download=<true|false>");
+    res.send("/?keys=<keys>&format=<format>&tag=<tag>&download=<true|false>");
   });
 
   app.listen(port, () => {
